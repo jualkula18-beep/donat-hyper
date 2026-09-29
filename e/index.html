@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memutar Video - Donat Hyper</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#000;
+      --surface:#0b1121;
+      --text:#f0f2f5;
+      --text-secondary:#8c94a3;
+      --accent:#388bff;
+      --border:rgba(255,255,255,.08);
+      --font:'Plus Jakarta Sans',sans-serif;
+    }
+    *,*::before,*::after {
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+    body {
+      font-family:var(--font);
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+    .top-bar {
+      width:100%;
+      padding:16px 24px;
+      border-bottom:1px solid var(--border);
+    }
+    .back-btn {
+      color:var(--text-secondary);
+      text-decoration:none;
+      font-size:14px;
+      font-weight:600;
+    }
+    .player-container {
+      width:100%;
+      max-width:900px;
+      margin:auto;
+      padding:24px 20px 60px;
+    }
+    .video-wrapper {
+      position:relative;
+      width:100%;
+      padding-bottom:56.25%;
+      background:#0a0a0a;
+      border-radius:12px;
+      overflow:hidden;
+      margin-bottom:24px;
+    }
+    .video-wrapper iframe {
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
+    .video-title {
+      font-size:20px;
+      font-weight:800;
+    }
+    @media(max-width:640px) {
+      .video-title {
+        font-size:16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-bar">
+    <a href="/" class="back-btn">← Kembali ke Beranda</a>
+  </div>
+
+  <main class="player-container">
+    <div class="video-wrapper">
+      <iframe id="videoPlayer" src="" allowfullscreen></iframe>
+    </div>
+
+    <h1 class="video-title" id="videoTitle">Memuat judul...</h1>
+  </main>
+
+  <script>
+    const pathParts = window.location.pathname
+      .split("/")
+      .filter(Boolean);
+
+    const eIndex = pathParts.indexOf("e");
+
+    const filecode =
+      eIndex >= 0 && pathParts[eIndex + 1]
+        ? decodeURIComponent(pathParts[eIndex + 1])
+        : "";
+
+    async function load() {
+      if (!filecode) {
+        document.getElementById("videoTitle").textContent =
+          "Video tidak ditemukan";
+        return;
+      }
+
+      document.getElementById("videoPlayer").src =
+        `https://vidara.so/e/${encodeURIComponent(filecode)}`;
+
+      try {
+        const res = await fetch(
+          `/_api/v1/video/info?filecode=${encodeURIComponent(filecode)}`
+        );
+
+        const data = await res.json();
+
+        if (data.status === 200 && data.result?.[0]) {
+          const title =
+            data.result[0].video_title || "Video";
+
+          document.getElementById("videoTitle").textContent = title;
+          document.title = title + " - Donat Hyper";
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    load();
+  </script>
+
+</body>
+</html>
