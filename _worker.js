@@ -6,9 +6,15 @@ export default {
       const apiPath = url.pathname.replace(/^\/_api/, "");
       const target = new URL("https://api.vidara.so" + apiPath);
 
+      // Teruskan query dari browser
       url.searchParams.forEach((value, key) => {
         target.searchParams.set(key, value);
       });
+
+      // Tambahkan API key dari Cloudflare Secret/Variable
+      if (env.VIDARA_API_KEY) {
+        target.searchParams.set("api_key", env.VIDARA_API_KEY);
+      }
 
       const response = await fetch(target.toString(), {
         method: request.method,
