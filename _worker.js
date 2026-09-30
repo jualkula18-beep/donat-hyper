@@ -10,22 +10,17 @@ export default {
         const apiPath = url.pathname.replace(/^\/_api/, "");
         const target = new URL("https://api.vidara.so" + apiPath);
 
-        // Teruskan query parameter
+        // Teruskan semua query parameter
         for (const [key, value] of url.searchParams.entries()) {
           target.searchParams.set(key, value);
         }
 
-        // API key dari Cloudflare
-        if (env.VIDARA_API_KEY) {
-          target.searchParams.set(
-            "api_key",
-            env.VIDARA_API_KEY
-          );
-        } else {
+        // API key Cloudflare
+        if (!env.VIDARA_API_KEY) {
           return new Response(
             JSON.stringify({
               status: 500,
-              error: "VIDARA_API_KEY belum tersedia di Cloudflare"
+              error: "VIDARA_API_KEY belum tersedia"
             }),
             {
               status: 500,
@@ -36,19 +31,21 @@ export default {
           );
         }
 
+        target.searchParams.set("api_key", env.VIDARA_API_KEY);
+
         const response = await fetch(target.toString(), {
-          method: request.method,
+          method: "GET",
           headers: {
             "Accept": "application/json"
           }
         });
 
-        return new Response(response.body, {
+        const body = await response.text();
+
+        return new Response(body, {
           status: response.status,
           headers: {
-            "Content-Type":
-              response.headers.get("Content-Type") ||
-              "application/json",
+            "Content-Type": "application/json; charset=utf-8",
             "Cache-Control": "no-store",
             "Access-Control-Allow-Origin": "*"
           }
@@ -74,10 +71,7 @@ export default {
     // PLAYER /e/xxxxx
     // ==============================
     if (url.pathname.startsWith("/e/")) {
-      const playerUrl = new URL(
-        "/e/index.html",
-        request.url
-      );
+      const playerUrl = new URL("/e/index.html", request.url);
 
       return env.ASSETS.fetch(
         new Request(playerUrl, {
