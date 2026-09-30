@@ -2,7 +2,11 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    console.log("WORKER AKTIF:", url.pathname);
+
+    // ==============================
     // TEST WORKER
+    // ==============================
     if (url.pathname === "/_api/test") {
       return new Response("FUNCTION BERHASIL", {
         status: 200,
@@ -13,7 +17,9 @@ export default {
       });
     }
 
+    // ==============================
     // API VIDARA
+    // ==============================
     if (url.pathname.startsWith("/_api/")) {
       try {
         if (!env.VIDARA_API_KEY) {
@@ -32,6 +38,7 @@ export default {
         }
 
         const apiPath = url.pathname.replace(/^\/_api/, "");
+
         const target = new URL(
           "https://api.vidara.so" + apiPath
         );
@@ -80,23 +87,3 @@ export default {
         );
       }
     }
-
-    // PLAYER /e/xxxxx
-    if (url.pathname.startsWith("/e/")) {
-      const playerUrl = new URL(
-        "/e/index.html",
-        request.url
-      );
-
-      return env.ASSETS.fetch(
-        new Request(playerUrl, {
-          method: "GET",
-          headers: request.headers
-        })
-      );
-    }
-
-    // WEBSITE UTAMA
-    return env.ASSETS.fetch(request);
-  }
-};
