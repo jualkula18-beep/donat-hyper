@@ -14,13 +14,10 @@
   <style>
     :root {
       --bg: #05070d;
-      --card: #0d111c;
-      --card2: #111827;
       --text: #f5f7fb;
-      --muted: #8d96a8;
-      --blue: #388bff;
-      --blue2: #635bff;
-      --border: rgba(255,255,255,.08);
+      --muted: #a0a8b8;
+      --blue: #2f80ed;
+      --border: rgba(255,255,255,.09);
     }
 
     * {
@@ -36,151 +33,170 @@
       min-height: 100vh;
     }
 
+    /* TOP BAR */
+
     .topbar {
-      height: 70px;
+      height: 68px;
       display: flex;
       align-items: center;
       padding: 0 22px;
       border-bottom: 1px solid var(--border);
-      background: rgba(5,7,13,.95);
+      background: #05070d;
     }
 
     .back {
-      color: var(--muted);
+      color: #b8c0d0;
       text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 700;
     }
 
     .back:hover {
       color: white;
     }
 
+    /* CONTAINER */
+
     .container {
       width: 100%;
       max-width: 900px;
       margin: auto;
-      padding: 28px 18px 70px;
+      padding: 30px 18px 70px;
     }
 
-    .video-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,.35);
-    }
+    /* VIDEO */
 
-    .thumbnail-wrap {
+    .video-box {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      background: #080b12;
+      background: #000;
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
     }
 
     .thumbnail {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: none;
-    }
-
-    .thumbnail-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .play-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,.18);
-    }
-
-    .play-circle {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: rgba(56,139,255,.95);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-      padding-left: 4px;
-      box-shadow: 0 10px 35px rgba(0,0,0,.4);
-    }
-
-    .info {
-      padding: 24px;
-    }
-
-    .title {
-      font-size: 22px;
-      line-height: 1.4;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-
-    .meta {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 7px 11px;
-      border-radius: 8px;
-      background: rgba(56,139,255,.12);
-      color: #65a5ff;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .button {
       display: block;
-      width: 100%;
-      text-align: center;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.12);
+    }
+
+    .play-button {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.72);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      padding-left: 5px;
       text-decoration: none;
-      border-radius: 11px;
-      padding: 15px 20px;
-      font-size: 15px;
-      font-weight: 800;
+      box-shadow: 0 10px 35px rgba(0,0,0,.5);
       transition: .2s;
     }
 
-    .button-primary {
-      background: linear-gradient(135deg, var(--blue), var(--blue2));
-      color: white;
-      box-shadow: 0 8px 25px rgba(56,139,255,.22);
+    .play-button:hover {
+      transform: scale(1.06);
+      background: rgba(0,0,0,.85);
     }
 
-    .button-primary:hover {
-      transform: translateY(-1px);
+    /* TITLE */
+
+    .title {
+      margin-top: 24px;
+      font-size: 25px;
+      line-height: 1.4;
+      font-weight: 800;
+      word-break: break-word;
     }
+
+    /* REPORT */
+
+    .report {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 11px 23px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.13);
+      background: #151a23;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    /* DOWNLOAD BOX */
+
+    .download-box {
+      margin-top: 42px;
+      background: #eef4fb;
+      border-radius: 18px;
+      padding: 42px 25px;
+      text-align: center;
+    }
+
+    .download-title {
+      color: #4e596b;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .download-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-width: 280px;
+      padding: 18px 30px;
+      border-radius: 50px;
+      background: #287cf0;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow: 0 10px 25px rgba(40,124,240,.28);
+      transition: .2s;
+    }
+
+    .download-button:hover {
+      transform: translateY(-2px);
+      background: #1d6fe0;
+    }
+
+    .download-icon {
+      font-size: 23px;
+    }
+
+    /* LOADING */
 
     .status {
       text-align: center;
       color: var(--muted);
-      font-size: 14px;
-      padding: 35px 10px;
+      padding: 50px 10px;
     }
 
     .hidden {
       display: none !important;
     }
 
+    /* MOBILE */
+
     @media (max-width: 600px) {
+
       .topbar {
         height: 60px;
         padding: 0 16px;
@@ -190,22 +206,35 @@
         padding: 18px 12px 50px;
       }
 
-      .video-card {
-        border-radius: 14px;
+      .video-box {
+        border-radius: 13px;
       }
 
-      .info {
-        padding: 19px;
+      .play-button {
+        width: 65px;
+        height: 65px;
+        font-size: 28px;
       }
 
       .title {
+        font-size: 20px;
+        margin-top: 19px;
+      }
+
+      .download-box {
+        margin-top: 32px;
+        padding: 32px 16px;
+      }
+
+      .download-title {
         font-size: 19px;
       }
 
-      .play-circle {
-        width: 60px;
-        height: 60px;
-        font-size: 25px;
+      .download-button {
+        width: 100%;
+        min-width: 0;
+        font-size: 16px;
+        padding: 16px 20px;
       }
     }
   </style>
@@ -223,52 +252,69 @@
       Memuat video...
     </div>
 
-    <div id="videoCard" class="video-card hidden">
+    <div id="content" class="hidden">
 
-      <div class="thumbnail-wrap">
+      <!-- VIDEO -->
+
+      <div class="video-box">
 
         <img
           id="thumbnail"
           class="thumbnail"
+          src=""
           alt="Thumbnail video"
         >
 
-        <div id="thumbnailPlaceholder" class="thumbnail-placeholder">
-          Memuat thumbnail...
-        </div>
+        <div class="video-overlay">
 
-        <div class="play-overlay">
-          <div class="play-circle">▶</div>
+          <a
+            id="playButton"
+            class="play-button"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Putar Video"
+          >
+            ▶
+          </a>
+
         </div>
 
       </div>
 
-      <div class="info">
+      <!-- TITLE -->
 
-        <h1 id="videoTitle" class="title">
-          Memuat judul...
-        </h1>
+      <h1 id="videoTitle" class="title">
+        Memuat judul...
+      </h1>
 
-        <div class="meta">
+      <!-- REPORT -->
 
-          <span class="badge">
-            HD
-          </span>
+      <a
+        href="javascript:void(0)"
+        class="report"
+        onclick="return false;"
+      >
+        Report
+      </a>
 
-          <span id="duration" class="badge">
-            --
-          </span>
+      <!-- DOWNLOAD / ADSTERRA -->
 
+      <div class="download-box">
+
+        <div class="download-title">
+          Your file is ready
         </div>
 
         <a
-          id="playButton"
-          class="button button-primary"
-          href="#"
+          id="downloadButton"
+          class="download-button"
+          href="https://laxativethem.com/yd0qkdd9b?key=b2e04fb72c8768c1d81819ff3cfd7294"
           target="_blank"
           rel="noopener noreferrer"
         >
-          ▶ Putar Video
+          <span class="download-icon">⇩</span>
+          Download file
         </a>
 
       </div>
@@ -281,9 +327,14 @@
 
   </main>
 
+
   <script>
+
     const API_KEY =
       '7d33e4000112589c0d5a8fc76b454c97c23886e9eacc92e01ec994bd5b88117c';
+
+
+    /* AMBIL FILECODE DARI URL */
 
     const parts =
       window.location.pathname
@@ -298,13 +349,14 @@
         ? decodeURIComponent(parts[eIndex + 1])
         : "";
 
+
     async function loadVideo() {
 
       const loading =
         document.getElementById("loading");
 
-      const card =
-        document.getElementById("videoCard");
+      const content =
+        document.getElementById("content");
 
       const error =
         document.getElementById("error");
@@ -315,80 +367,64 @@
       const thumbnail =
         document.getElementById("thumbnail");
 
-      const placeholder =
-        document.getElementById("thumbnailPlaceholder");
-
-      const duration =
-        document.getElementById("duration");
-
       const playButton =
         document.getElementById("playButton");
 
+
       if (!filecode) {
+
         loading.classList.add("hidden");
+
         error.textContent =
           "Video tidak ditemukan.";
+
         error.classList.remove("hidden");
+
         return;
       }
+
 
       try {
 
         const apiUrl =
           `/_api/v1/video/info?api_key=${encodeURIComponent(API_KEY)}&filecode=${encodeURIComponent(filecode)}`;
 
+
         const response =
           await fetch(apiUrl);
 
+
         if (!response.ok) {
-          throw new Error("API error " + response.status);
+          throw new Error(
+            "API error " + response.status
+          );
         }
+
 
         const data =
           await response.json();
+
 
         const video =
           Array.isArray(data.result)
             ? data.result[0]
             : data.result;
 
+
         if (!video) {
-          throw new Error("Data video tidak ditemukan");
+          throw new Error(
+            "Data video tidak ditemukan"
+          );
         }
+
 
         const videoTitle =
           video.video_title || "Video";
 
+
         const videoLink =
           video.link || "";
 
-        title.textContent =
-          videoTitle;
-
-        document.title =
-          videoTitle + " - Donat Hyper";
-
-        duration.textContent =
-          video.video_length || "--";
-
-        if (video.player_img) {
-
-          thumbnail.src =
-            video.player_img;
-
-          thumbnail.onload = () => {
-            thumbnail.style.display = "block";
-            placeholder.style.display = "none";
-          };
-
-          thumbnail.onerror = () => {
-            placeholder.textContent =
-              "Thumbnail tidak tersedia";
-          };
-        } else {
-          placeholder.textContent =
-            "Thumbnail tidak tersedia";
-        }
 
         if (!videoLink) {
           throw new Error(
@@ -396,11 +432,39 @@
           );
         }
 
+
+        /* JUDUL */
+
+        title.textContent =
+          videoTitle;
+
+
+        document.title =
+          videoTitle + " - Donat Hyper";
+
+
+        /* THUMBNAIL */
+
+        if (video.player_img) {
+
+          thumbnail.src =
+            video.player_img;
+
+        }
+
+
+        /* LINK PUTAR VIDEO */
+
         playButton.href =
           videoLink;
 
+
+        /* TAMPILKAN */
+
         loading.classList.add("hidden");
-        card.classList.remove("hidden");
+
+        content.classList.remove("hidden");
+
 
       } catch (err) {
 
@@ -412,10 +476,14 @@
           "Gagal memuat video: " + err.message;
 
         error.classList.remove("hidden");
+
       }
+
     }
 
+
     loadVideo();
+
   </script>
 
 </body>
