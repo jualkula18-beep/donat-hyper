@@ -3,38 +3,53 @@ export default {
     const url = new URL(request.url);
 
     // ==============================
+    // TEST WORKER
+    // ==============================
+    if (url.pathname === "/_api/test") {
+      return new Response("FUNCTION BERHASIL", {
+        status: 200,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "no-store"
+        }
+      });
+    }
+
+    // ==============================
     // API VIDARA
     // ==============================
-   if (
-  url.pathname.startsWith("/_api/") &&
-  !url.pathname.startsWith("/_api/test")
-) {
+    if (url.pathname.startsWith("/_api/")) {
       try {
+        if (!env.VIDARA_API_KEY) {
+          return new Response(
+            JSON.stringify({
+              status: 500,
+              error: "VIDARA_API_KEY belum tersedia di Cloudflare"
+            }),
+            {
+              status: 500,
+              headers: {
+                "Content-Type": "application/json; charset=utf-8"
+              }
+            }
+          );
+        }
+
         const apiPath = url.pathname.replace(/^\/_api/, "");
-        const target = new URL("https://api.vidara.so" + apiPath);
+        const target = new URL(
+          "https://api.vidara.so" + apiPath
+        );
 
         // Teruskan semua query parameter
         for (const [key, value] of url.searchParams.entries()) {
           target.searchParams.set(key, value);
         }
 
-        // API key Cloudflare
-        if (!env.VIDARA_API_KEY) {
-          return new Response(
-            JSON.stringify({
-              status: 500,
-              error: "VIDARA_API_KEY belum tersedia"
-            }),
-            {
-              status: 500,
-              headers: {
-                "Content-Type": "application/json"
-              }
-            }
-          );
-        }
-
-        target.searchParams.set("api_key", env.VIDARA_API_KEY);
+        // Tambahkan API key dari Cloudflare Secret
+        target.searchParams.set(
+          "api_key",
+          env.VIDARA_API_KEY
+        );
 
         const response = await fetch(target.toString(), {
           method: "GET",
@@ -48,7 +63,9 @@ export default {
         return new Response(body, {
           status: response.status,
           headers: {
-            "Content-Type": "application/json; charset=utf-8",
+            "Content-Type":
+              response.headers.get("Content-Type") ||
+              "application/json; charset=utf-8",
             "Cache-Control": "no-store",
             "Access-Control-Allow-Origin": "*"
           }
@@ -63,7 +80,7 @@ export default {
           {
             status: 500,
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json; charset=utf-8"
             }
           }
         );
@@ -74,7 +91,10 @@ export default {
     // PLAYER /e/xxxxx
     // ==============================
     if (url.pathname.startsWith("/e/")) {
-      const playerUrl = new URL("/e/index.html", request.url);
+      const playerUrl = new URL(
+        "/e/index.html",
+        request.url
+      );
 
       return env.ASSETS.fetch(
         new Request(playerUrl, {
