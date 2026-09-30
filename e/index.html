@@ -10,7 +10,6 @@
   <style>
     :root {
       --bg:#000;
-      --surface:#0b1121;
       --text:#f0f2f5;
       --text-secondary:#8c94a3;
       --accent:#388bff;
@@ -52,22 +51,16 @@
     }
 
     .video-wrapper {
-      position:relative;
       width:100%;
-      padding-bottom:56.25%;
+      min-height:300px;
       background:#0a0a0a;
       border-radius:12px;
-      overflow:hidden;
       margin-bottom:24px;
-    }
-
-    .video-wrapper iframe {
-      position:absolute;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      border:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:30px;
+      text-align:center;
     }
 
     .video-title {
@@ -77,7 +70,8 @@
 
     .loading {
       color:var(--text-secondary);
-      margin-top:10px;
+      margin-top:12px;
+      word-break:break-word;
     }
 
     @media(max-width:640px) {
@@ -97,21 +91,14 @@
   <main class="player-container">
 
     <div class="video-wrapper">
-      <iframe
-        id="videoPlayer"
-        src=""
-        allowfullscreen
-        allow="autoplay; fullscreen; picture-in-picture">
-      </iframe>
+      <div id="status">
+        Memuat video...
+      </div>
     </div>
 
     <h1 class="video-title" id="videoTitle">
       Memuat judul...
     </h1>
-
-    <div class="loading" id="status">
-      Memuat video...
-    </div>
 
   </main>
 
@@ -135,9 +122,6 @@
       const titleElement =
         document.getElementById("videoTitle");
 
-      const player =
-        document.getElementById("videoPlayer");
-
       const status =
         document.getElementById("status");
 
@@ -149,7 +133,7 @@
 
       try {
 
-        status.textContent = "Memuat video...";
+        status.textContent = "Memuat data video...";
 
         const apiUrl =
           `/_api/v1/video/info?api_key=${encodeURIComponent(API_KEY)}&filecode=${encodeURIComponent(filecode)}`;
@@ -164,7 +148,6 @@
 
         console.log("API response:", data);
 
-        // API menggunakan "result"
         const video =
           Array.isArray(data.result)
             ? data.result[0]
@@ -174,26 +157,25 @@
           throw new Error("Data video tidak ditemukan");
         }
 
-        // Ambil link player dari API
-        const videoLink = video.link;
+        const videoLink = video.link || "";
 
-        if (!videoLink) {
-          throw new Error("Link video tidak tersedia");
-        }
-
-        // Tampilkan video di iframe
-        player.src = videoLink;
-
-        // Tampilkan judul
         const title =
           video.video_title || "Video";
 
         titleElement.textContent = title;
-
         document.title =
           title + " - Donat Hyper";
 
-        status.textContent = "";
+        if (videoLink) {
+          status.innerHTML =
+            "Link video ditemukan:<br><br>" +
+            "<strong>" +
+            videoLink +
+            "</strong>";
+        } else {
+          status.textContent =
+            "Link video tidak tersedia.";
+        }
 
       } catch (error) {
 
@@ -203,9 +185,7 @@
           "Gagal memuat video";
 
         status.textContent =
-          "Video tidak dapat dimuat. Silakan coba lagi.";
-
-        player.src = "";
+          error.message;
       }
     }
 
