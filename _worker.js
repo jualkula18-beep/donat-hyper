@@ -2,9 +2,7 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // ==============================
     // TEST WORKER
-    // ==============================
     if (url.pathname === "/_api/test") {
       return new Response("FUNCTION BERHASIL", {
         status: 200,
@@ -15,9 +13,7 @@ export default {
       });
     }
 
-    // ==============================
     // API VIDARA
-    // ==============================
     if (url.pathname.startsWith("/_api/")) {
       try {
         if (!env.VIDARA_API_KEY) {
@@ -40,12 +36,10 @@ export default {
           "https://api.vidara.so" + apiPath
         );
 
-        // Teruskan semua query parameter
         for (const [key, value] of url.searchParams.entries()) {
           target.searchParams.set(key, value);
         }
 
-        // Tambahkan API key dari Cloudflare Secret
         target.searchParams.set(
           "api_key",
           env.VIDARA_API_KEY
@@ -87,9 +81,7 @@ export default {
       }
     }
 
-    // ==============================
     // PLAYER /e/xxxxx
-    // ==============================
     if (url.pathname.startsWith("/e/")) {
       const playerUrl = new URL(
         "/e/index.html",
@@ -104,9 +96,7 @@ export default {
       );
     }
 
-    // ==============================
     // WEBSITE UTAMA
-    // ==============================
     return env.ASSETS.fetch(request);
   }
 };
