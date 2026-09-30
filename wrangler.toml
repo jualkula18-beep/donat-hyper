@@ -1,8 +1,3 @@
 name = "donat-hyper"
-main = "_worker.js"
 compatibility_date = "2026-09-30"
-
-[assets]
-directory = "."
-binding = "ASSETS"
-run_worker_first = true
+pages_build_output_dir = "."
