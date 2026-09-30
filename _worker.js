@@ -87,3 +87,27 @@ export default {
         );
       }
     }
+
+    // ==============================
+    // PLAYER /e/xxxxx
+    // ==============================
+    if (url.pathname.startsWith("/e/")) {
+      const playerUrl = new URL(
+        "/e/index.html",
+        request.url
+      );
+
+      return env.ASSETS.fetch(
+        new Request(playerUrl, {
+          method: "GET",
+          headers: request.headers
+        })
+      );
+    }
+
+    // ==============================
+    // WEBSITE UTAMA
+    // ==============================
+    return env.ASSETS.fetch(request);
+  }
+};
