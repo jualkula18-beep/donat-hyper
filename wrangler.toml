@@ -5,4 +5,4 @@ compatibility_date = "2026-09-30"
 [assets]
 directory = "."
 binding = "ASSETS"
-run_worker_first = ["/_api/*"]
+run_worker_first = true
