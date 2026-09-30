@@ -164,41 +164,32 @@
 
         console.log("API response:", data);
 
-        /*
-         * API mengembalikan data video di data.data
-         */
+        // API menggunakan "result"
         const video =
-          Array.isArray(data.data)
-            ? data.data[0]
-            : data.data;
+          Array.isArray(data.result)
+            ? data.result[0]
+            : data.result;
 
         if (!video) {
           throw new Error("Data video tidak ditemukan");
         }
 
-        /*
-         * Ambil link player dari API.
-         * Contoh:
-         * https://vidaraa.cc/47y9Rfuqn8WcQ
-         */
+        // Ambil link player dari API
         const videoLink = video.link;
 
         if (!videoLink) {
           throw new Error("Link video tidak tersedia");
         }
 
-        /*
-         * Pasang link yang diberikan API.
-         */
-        window.open(videoLink, "_blank");
+        // Tampilkan video di iframe
+        player.src = videoLink;
 
-        /*
-         * Tampilkan judul.
-         */
+        // Tampilkan judul
         const title =
           video.video_title || "Video";
 
         titleElement.textContent = title;
+
         document.title =
           title + " - Donat Hyper";
 
