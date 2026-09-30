@@ -17,7 +17,7 @@
       --font:'Plus Jakarta Sans',sans-serif;
     }
 
-    *,*::before,*::after {
+    * {
       box-sizing:border-box;
       margin:0;
       padding:0;
@@ -48,36 +48,39 @@
       max-width:900px;
       margin:auto;
       padding:24px 20px 60px;
+      text-align:center;
     }
 
-    .video-wrapper {
-      width:100%;
-      min-height:300px;
+    .video-box {
       background:#0a0a0a;
       border-radius:12px;
+      padding:50px 20px;
       margin-bottom:24px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:30px;
-      text-align:center;
+    }
+
+    .play-btn {
+      display:inline-block;
+      padding:15px 30px;
+      background:var(--accent);
+      color:white;
+      border:0;
+      border-radius:10px;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      text-decoration:none;
     }
 
     .video-title {
       font-size:20px;
       font-weight:800;
+      margin-bottom:12px;
     }
 
-    .loading {
+    .status {
       color:var(--text-secondary);
-      margin-top:12px;
-      word-break:break-word;
-    }
-
-    @media(max-width:640px) {
-      .video-title {
-        font-size:16px;
-      }
+      font-size:14px;
+      margin-bottom:25px;
     }
   </style>
 </head>
@@ -90,10 +93,20 @@
 
   <main class="player-container">
 
-    <div class="video-wrapper">
-      <div id="status">
+    <div class="video-box">
+      <div class="status" id="status">
         Memuat video...
       </div>
+
+      <a
+        id="playButton"
+        class="play-btn"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="display:none;">
+        ▶ Putar Video
+      </a>
     </div>
 
     <h1 class="video-title" id="videoTitle">
@@ -106,11 +119,13 @@
     const API_KEY =
       '7d33e4000112589c0d5a8fc76b454c97c23886e9eacc92e01ec994bd5b88117c';
 
-    const pathParts = window.location.pathname
-      .split("/")
-      .filter(Boolean);
+    const pathParts =
+      window.location.pathname
+        .split("/")
+        .filter(Boolean);
 
-    const eIndex = pathParts.indexOf("e");
+    const eIndex =
+      pathParts.indexOf("e");
 
     const filecode =
       eIndex >= 0 && pathParts[eIndex + 1]
@@ -125,28 +140,39 @@
       const status =
         document.getElementById("status");
 
+      const playButton =
+        document.getElementById("playButton");
+
       if (!filecode) {
-        titleElement.textContent = "Video tidak ditemukan";
+        titleElement.textContent =
+          "Video tidak ditemukan";
+
         status.textContent = "";
+
         return;
       }
 
       try {
 
-        status.textContent = "Memuat data video...";
-
         const apiUrl =
           `/_api/v1/video/info?api_key=${encodeURIComponent(API_KEY)}&filecode=${encodeURIComponent(filecode)}`;
 
-        const res = await fetch(apiUrl);
+        const res =
+          await fetch(apiUrl);
 
         if (!res.ok) {
-          throw new Error("API error: " + res.status);
+          throw new Error(
+            "API error: " + res.status
+          );
         }
 
-        const data = await res.json();
+        const data =
+          await res.json();
 
-        console.log("API response:", data);
+        console.log(
+          "API response:",
+          data
+        );
 
         const video =
           Array.isArray(data.result)
@@ -154,32 +180,42 @@
             : data.result;
 
         if (!video) {
-          throw new Error("Data video tidak ditemukan");
+          throw new Error(
+            "Data video tidak ditemukan"
+          );
         }
 
-        const videoLink = video.link || "";
+        const videoLink =
+          video.link || "";
 
         const title =
           video.video_title || "Video";
 
-        titleElement.textContent = title;
+        titleElement.textContent =
+          title;
+
         document.title =
           title + " - Donat Hyper";
 
-        if (videoLink) {
-          status.innerHTML =
-            "Link video ditemukan:<br><br>" +
-            "<strong>" +
-            videoLink +
-            "</strong>";
-        } else {
+        if (!videoLink) {
           status.textContent =
             "Link video tidak tersedia.";
+
+          return;
         }
+
+        status.textContent =
+          "Video siap diputar.";
+
+        playButton.href =
+          videoLink;
+
+        playButton.style.display =
+          "inline-block";
 
       } catch (error) {
 
-        console.error("Gagal memuat video:", error);
+        console.error(error);
 
         titleElement.textContent =
           "Gagal memuat video";
