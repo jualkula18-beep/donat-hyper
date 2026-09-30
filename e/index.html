@@ -3,115 +3,281 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Memutar Video - Donat Hyper</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <title>Memuat Video - Donat Hyper</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
     :root {
-      --bg:#000;
-      --text:#f0f2f5;
-      --text-secondary:#8c94a3;
-      --accent:#388bff;
-      --border:rgba(255,255,255,.08);
-      --font:'Plus Jakarta Sans',sans-serif;
+      --bg: #05070d;
+      --card: #0d111c;
+      --card2: #111827;
+      --text: #f5f7fb;
+      --muted: #8d96a8;
+      --blue: #388bff;
+      --blue2: #635bff;
+      --border: rgba(255,255,255,.08);
     }
 
     * {
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      font-family:var(--font);
-      background:var(--bg);
-      color:var(--text);
-      min-height:100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
     }
 
-    .top-bar {
-      width:100%;
-      padding:16px 24px;
-      border-bottom:1px solid var(--border);
+    .topbar {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      padding: 0 22px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(5,7,13,.95);
     }
 
-    .back-btn {
-      color:var(--text-secondary);
-      text-decoration:none;
-      font-size:14px;
-      font-weight:600;
+    .back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
     }
 
-    .player-container {
-      width:100%;
-      max-width:900px;
-      margin:auto;
-      padding:24px 20px 60px;
-      text-align:center;
+    .back:hover {
+      color: white;
     }
 
-    .video-box {
-      background:#0a0a0a;
-      border-radius:12px;
-      padding:50px 20px;
-      margin-bottom:24px;
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      padding: 28px 18px 70px;
     }
 
-    .play-btn {
-      display:inline-block;
-      padding:15px 30px;
-      background:var(--accent);
-      color:white;
-      border:0;
-      border-radius:10px;
-      font-size:16px;
-      font-weight:700;
-      cursor:pointer;
-      text-decoration:none;
+    .video-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
     }
 
-    .video-title {
-      font-size:20px;
-      font-weight:800;
-      margin-bottom:12px;
+    .thumbnail-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #080b12;
+      overflow: hidden;
+    }
+
+    .thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .thumbnail-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.18);
+    }
+
+    .play-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(56,139,255,.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      padding-left: 4px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.4);
+    }
+
+    .info {
+      padding: 24px;
+    }
+
+    .title {
+      font-size: 22px;
+      line-height: 1.4;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 8px;
+      background: rgba(56,139,255,.12);
+      color: #65a5ff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 11px;
+      padding: 15px 20px;
+      font-size: 15px;
+      font-weight: 800;
+      transition: .2s;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: white;
+      box-shadow: 0 8px 25px rgba(56,139,255,.22);
+    }
+
+    .button-primary:hover {
+      transform: translateY(-1px);
     }
 
     .status {
-      color:var(--text-secondary);
-      font-size:14px;
-      margin-bottom:25px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      padding: 35px 10px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        height: 60px;
+        padding: 0 16px;
+      }
+
+      .container {
+        padding: 18px 12px 50px;
+      }
+
+      .video-card {
+        border-radius: 14px;
+      }
+
+      .info {
+        padding: 19px;
+      }
+
+      .title {
+        font-size: 19px;
+      }
+
+      .play-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 25px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="top-bar">
-    <a href="/" class="back-btn">← Kembali ke Beranda</a>
-  </div>
+  <header class="topbar">
+    <a href="/" class="back">← Kembali ke Beranda</a>
+  </header>
 
-  <main class="player-container">
+  <main class="container">
 
-    <div class="video-box">
-      <div class="status" id="status">
-        Memuat video...
-      </div>
-
-      <a
-        id="playButton"
-        class="play-btn"
-        href="#"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="display:none;">
-        ▶ Putar Video
-      </a>
+    <div id="loading" class="status">
+      Memuat video...
     </div>
 
-    <h1 class="video-title" id="videoTitle">
-      Memuat judul...
-    </h1>
+    <div id="videoCard" class="video-card hidden">
+
+      <div class="thumbnail-wrap">
+
+        <img
+          id="thumbnail"
+          class="thumbnail"
+          alt="Thumbnail video"
+        >
+
+        <div id="thumbnailPlaceholder" class="thumbnail-placeholder">
+          Memuat thumbnail...
+        </div>
+
+        <div class="play-overlay">
+          <div class="play-circle">▶</div>
+        </div>
+
+      </div>
+
+      <div class="info">
+
+        <h1 id="videoTitle" class="title">
+          Memuat judul...
+        </h1>
+
+        <div class="meta">
+
+          <span class="badge">
+            HD
+          </span>
+
+          <span id="duration" class="badge">
+            --
+          </span>
+
+        </div>
+
+        <a
+          id="playButton"
+          class="button button-primary"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ▶ Putar Video
+        </a>
+
+      </div>
+
+    </div>
+
+    <div id="error" class="status hidden">
+      Gagal memuat video.
+    </div>
 
   </main>
 
@@ -119,36 +285,50 @@
     const API_KEY =
       '7d33e4000112589c0d5a8fc76b454c97c23886e9eacc92e01ec994bd5b88117c';
 
-    const pathParts =
+    const parts =
       window.location.pathname
         .split("/")
         .filter(Boolean);
 
     const eIndex =
-      pathParts.indexOf("e");
+      parts.indexOf("e");
 
     const filecode =
-      eIndex >= 0 && pathParts[eIndex + 1]
-        ? decodeURIComponent(pathParts[eIndex + 1])
+      eIndex >= 0 && parts[eIndex + 1]
+        ? decodeURIComponent(parts[eIndex + 1])
         : "";
 
-    async function load() {
+    async function loadVideo() {
 
-      const titleElement =
+      const loading =
+        document.getElementById("loading");
+
+      const card =
+        document.getElementById("videoCard");
+
+      const error =
+        document.getElementById("error");
+
+      const title =
         document.getElementById("videoTitle");
 
-      const status =
-        document.getElementById("status");
+      const thumbnail =
+        document.getElementById("thumbnail");
+
+      const placeholder =
+        document.getElementById("thumbnailPlaceholder");
+
+      const duration =
+        document.getElementById("duration");
 
       const playButton =
         document.getElementById("playButton");
 
       if (!filecode) {
-        titleElement.textContent =
-          "Video tidak ditemukan";
-
-        status.textContent = "";
-
+        loading.classList.add("hidden");
+        error.textContent =
+          "Video tidak ditemukan.";
+        error.classList.remove("hidden");
         return;
       }
 
@@ -157,22 +337,15 @@
         const apiUrl =
           `/_api/v1/video/info?api_key=${encodeURIComponent(API_KEY)}&filecode=${encodeURIComponent(filecode)}`;
 
-        const res =
+        const response =
           await fetch(apiUrl);
 
-        if (!res.ok) {
-          throw new Error(
-            "API error: " + res.status
-          );
+        if (!response.ok) {
+          throw new Error("API error " + response.status);
         }
 
         const data =
-          await res.json();
-
-        console.log(
-          "API response:",
-          data
-        );
+          await response.json();
 
         const video =
           Array.isArray(data.result)
@@ -180,52 +353,69 @@
             : data.result;
 
         if (!video) {
-          throw new Error(
-            "Data video tidak ditemukan"
-          );
+          throw new Error("Data video tidak ditemukan");
         }
+
+        const videoTitle =
+          video.video_title || "Video";
 
         const videoLink =
           video.link || "";
 
-        const title =
-          video.video_title || "Video";
-
-        titleElement.textContent =
-          title;
+        title.textContent =
+          videoTitle;
 
         document.title =
-          title + " - Donat Hyper";
+          videoTitle + " - Donat Hyper";
 
-        if (!videoLink) {
-          status.textContent =
-            "Link video tidak tersedia.";
+        duration.textContent =
+          video.video_length || "--";
 
-          return;
+        if (video.player_img) {
+
+          thumbnail.src =
+            video.player_img;
+
+          thumbnail.onload = () => {
+            thumbnail.style.display = "block";
+            placeholder.style.display = "none";
+          };
+
+          thumbnail.onerror = () => {
+            placeholder.textContent =
+              "Thumbnail tidak tersedia";
+          };
+        } else {
+          placeholder.textContent =
+            "Thumbnail tidak tersedia";
         }
 
-        status.textContent =
-          "Video siap diputar.";
+        if (!videoLink) {
+          throw new Error(
+            "Link video tidak tersedia"
+          );
+        }
 
         playButton.href =
           videoLink;
 
-        playButton.style.display =
-          "inline-block";
+        loading.classList.add("hidden");
+        card.classList.remove("hidden");
 
-      } catch (error) {
+      } catch (err) {
 
-        console.error(error);
+        console.error(err);
 
-        titleElement.textContent =
-          "Gagal memuat video";
+        loading.classList.add("hidden");
 
-        status.textContent =
-          error.message;
+        error.textContent =
+          "Gagal memuat video: " + err.message;
+
+        error.classList.remove("hidden");
       }
     }
 
-    load();
+    loadVideo();
   </script>
 
 </body>
