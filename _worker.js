@@ -5,7 +5,10 @@ export default {
     // ==============================
     // API VIDARA
     // ==============================
-    if (url.pathname.startsWith("/_api/")) {
+   if (
+  url.pathname.startsWith("/_api/") &&
+  !url.pathname.startsWith("/_api/test")
+) {
       try {
         const apiPath = url.pathname.replace(/^\/_api/, "");
         const target = new URL("https://api.vidara.so" + apiPath);
