@@ -1,3 +1,3 @@
-export async function onRequest() {
-  return new Response("WORKER HIDUP");
+export async function onRequest(context) {
+  return context.next();
 }
