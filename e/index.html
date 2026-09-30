@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Memutar Video - Donat Hyper</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg:#000;
@@ -15,34 +17,40 @@
       --border:rgba(255,255,255,.08);
       --font:'Plus Jakarta Sans',sans-serif;
     }
+
     *,*::before,*::after {
       box-sizing:border-box;
       margin:0;
       padding:0;
     }
+
     body {
       font-family:var(--font);
       background:var(--bg);
       color:var(--text);
       min-height:100vh;
     }
+
     .top-bar {
       width:100%;
       padding:16px 24px;
       border-bottom:1px solid var(--border);
     }
+
     .back-btn {
       color:var(--text-secondary);
       text-decoration:none;
       font-size:14px;
       font-weight:600;
     }
+
     .player-container {
       width:100%;
       max-width:900px;
       margin:auto;
       padding:24px 20px 60px;
     }
+
     .video-wrapper {
       position:relative;
       width:100%;
@@ -52,6 +60,7 @@
       overflow:hidden;
       margin-bottom:24px;
     }
+
     .video-wrapper iframe {
       position:absolute;
       top:0;
@@ -60,10 +69,17 @@
       height:100%;
       border:0;
     }
+
     .video-title {
       font-size:20px;
       font-weight:800;
     }
+
+    .loading {
+      color:var(--text-secondary);
+      margin-top:10px;
+    }
+
     @media(max-width:640px) {
       .video-title {
         font-size:16px;
@@ -79,14 +95,30 @@
   </div>
 
   <main class="player-container">
+
     <div class="video-wrapper">
-      <iframe id="videoPlayer" src="" allowfullscreen></iframe>
+      <iframe
+        id="videoPlayer"
+        src=""
+        allowfullscreen
+        allow="autoplay; fullscreen; picture-in-picture">
+      </iframe>
     </div>
 
-    <h1 class="video-title" id="videoTitle">Memuat judul...</h1>
+    <h1 class="video-title" id="videoTitle">
+      Memuat judul...
+    </h1>
+
+    <div class="loading" id="status">
+      Memuat video...
+    </div>
+
   </main>
 
   <script>
+    const API_KEY =
+      '7d33e4000112589c0d5a8fc76b454c97c23886e9eacc92e01ec994bd5b88117c';
+
     const pathParts = window.location.pathname
       .split("/")
       .filter(Boolean);
@@ -99,31 +131,90 @@
         : "";
 
     async function load() {
+
+      const titleElement =
+        document.getElementById("videoTitle");
+
+      const player =
+        document.getElementById("videoPlayer");
+
+      const status =
+        document.getElementById("status");
+
       if (!filecode) {
-        document.getElementById("videoTitle").textContent =
-          "Video tidak ditemukan";
+        titleElement.textContent = "Video tidak ditemukan";
+        status.textContent = "";
         return;
       }
 
-      document.getElementById("videoPlayer").src =
-        `https://vidara.so/e/${encodeURIComponent(filecode)}`;
-
       try {
-        const res = await fetch(
-          `/_api/v1/video/info?filecode=${encodeURIComponent(filecode)}`
-        );
+
+        status.textContent = "Memuat video...";
+
+        const apiUrl =
+          `/_api/v1/video/info?api_key=${encodeURIComponent(API_KEY)}&filecode=${encodeURIComponent(filecode)}`;
+
+        const res = await fetch(apiUrl);
+
+        if (!res.ok) {
+          throw new Error("API error: " + res.status);
+        }
 
         const data = await res.json();
 
-        if (data.status === 200 && data.result?.[0]) {
-          const title =
-            data.result[0].video_title || "Video";
+        console.log("API response:", data);
 
-          document.getElementById("videoTitle").textContent = title;
-          document.title = title + " - Donat Hyper";
+        /*
+         * API mengembalikan data video di data.data
+         */
+        const video =
+          Array.isArray(data.data)
+            ? data.data[0]
+            : data.data;
+
+        if (!video) {
+          throw new Error("Data video tidak ditemukan");
         }
+
+        /*
+         * Ambil link player dari API.
+         * Contoh:
+         * https://vidaraa.cc/47y9Rfuqn8WcQ
+         */
+        const videoLink = video.link;
+
+        if (!videoLink) {
+          throw new Error("Link video tidak tersedia");
+        }
+
+        /*
+         * Pasang link yang diberikan API.
+         */
+        player.src = videoLink;
+
+        /*
+         * Tampilkan judul.
+         */
+        const title =
+          video.video_title || "Video";
+
+        titleElement.textContent = title;
+        document.title =
+          title + " - Donat Hyper";
+
+        status.textContent = "";
+
       } catch (error) {
-        console.error(error);
+
+        console.error("Gagal memuat video:", error);
+
+        titleElement.textContent =
+          "Gagal memuat video";
+
+        status.textContent =
+          "Video tidak dapat dimuat. Silakan coba lagi.";
+
+        player.src = "";
       }
     }
 
