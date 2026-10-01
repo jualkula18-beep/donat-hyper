@@ -1,260 +1,222 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Memuat Video - Donat Hyper</title>
 
-<link
-href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-rel="stylesheet"
->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
-:root {
-  --bg: #05070d;
-  --text: #f5f7fb;
-  --muted: #a0a8b8;
-  --blue: #2f80ed;
-  --border: rgba(255,255,255,.09);
+:root{
+  --bg:#000;
+  --surface:#0b1121;
+  --text:#f5f7fb;
+  --muted:#9ca6b8;
+  --accent:#388bff;
+  --border:rgba(255,255,255,.08);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Plus Jakarta Sans",Arial,sans-serif;
+  min-height:100vh;
 }
 
-/* TOP BAR */
-
-.topbar {
-  height: 68px;
-  display: flex;
-  align-items: center;
-  padding: 0 22px;
-  border-bottom: 1px solid var(--border);
-  background: #05070d;
+header{
+  height:68px;
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
 }
 
-.back {
-  color: #b8c0d0;
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 700;
+.back{
+  color:#fff;
+  text-decoration:none;
+  font-size:15px;
+  font-weight:700;
 }
 
-.back:hover {
-  color: white;
+.container{
+  width:100%;
+  max-width:950px;
+  margin:auto;
+  padding:25px 16px 60px;
 }
 
-/* CONTAINER */
+.status{
+  text-align:center;
+  color:var(--muted);
+  padding:60px 15px;
+}
 
-.container {
-  width: 100%;
-  max-width: 900px;
-  margin: auto;
-  padding: 30px 18px 70px;
+.hidden{
+  display:none!important;
 }
 
 /* VIDEO */
-
-.video-box {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #000;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+.video-box{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#050505;
+  border-radius:14px;
+  overflow:hidden;
 }
 
-.thumbnail {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.thumbnail{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
 
-.video-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,.12);
+.play-overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.18);
 }
 
-.play-button {
-  width: 82px;
-  height: 82px;
-  border-radius: 50%;
-  background: rgba(0,0,0,.72);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 36px;
-  padding-left: 5px;
-  text-decoration: none;
-  box-shadow: 0 10px 35px rgba(0,0,0,.5);
-  transition: .2s;
+.play-button{
+  width:78px;
+  height:78px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding-left:5px;
+  background:rgba(0,0,0,.75);
+  color:#fff;
+  text-decoration:none;
+  font-size:34px;
+  transition:.2s;
 }
 
-.play-button:hover {
-  transform: scale(1.06);
-  background: rgba(0,0,0,.85);
+.play-button:hover{
+  transform:scale(1.07);
 }
 
 /* TITLE */
-
-.title {
-  margin-top: 24px;
-  font-size: 25px;
-  line-height: 1.4;
-  font-weight: 800;
-  word-break: break-word;
+.title{
+  margin-top:20px;
+  font-size:24px;
+  line-height:1.4;
+  font-weight:800;
+  word-break:break-word;
 }
 
 /* REPORT */
-
-.report {
-  display: inline-block;
-  margin-top: 18px;
-  padding: 11px 23px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.13);
-  background: #151a23;
-  color: white;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
+.report{
+  display:inline-block;
+  margin-top:16px;
+  padding:10px 20px;
+  border-radius:9px;
+  border:1px solid rgba(255,255,255,.12);
+  background:#151a23;
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:700;
 }
 
-/* DOWNLOAD BOX */
-
-.download-box {
-  margin-top: 42px;
-  background: #eef4fb;
-  border-radius: 18px;
-  padding: 42px 25px;
-  text-align: center;
+/* DOWNLOAD */
+.download-box{
+  margin-top:35px;
+  padding:40px 20px;
+  background:#eef4fb;
+  border-radius:16px;
+  text-align:center;
 }
 
-.download-title {
-  color: #4e596b;
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 25px;
+.download-title{
+  color:#505b6c;
+  font-size:21px;
+  font-weight:600;
+  margin-bottom:22px;
 }
 
-.download-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-width: 280px;
-  padding: 18px 30px;
-  border-radius: 50px;
-  background: #287cf0;
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 800;
-  box-shadow: 0 10px 25px rgba(40,124,240,.28);
-  transition: .2s;
+.download-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-width:270px;
+  padding:17px 28px;
+  border-radius:50px;
+  background:#287cf0;
+  color:#fff;
+  text-decoration:none;
+  font-size:17px;
+  font-weight:800;
 }
 
-.download-button:hover {
-  transform: translateY(-2px);
-  background: #1d6fe0;
+.download-icon{
+  font-size:22px;
 }
 
-.download-icon {
-  font-size: 23px;
-}
+@media(max-width:600px){
 
-/* LOADING */
-
-.status {
-  text-align: center;
-  color: var(--muted);
-  padding: 50px 10px;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-  .topbar {
-    height: 60px;
-    padding: 0 16px;
+  header{
+    height:60px;
+    padding:0 15px;
   }
 
-  .container {
-    padding: 18px 12px 50px;
+  .container{
+    padding:18px 12px 45px;
   }
 
-  .video-box {
-    border-radius: 13px;
+  .video-box{
+    border-radius:11px;
   }
 
-  .play-button {
-    width: 65px;
-    height: 65px;
-    font-size: 28px;
+  .play-button{
+    width:64px;
+    height:64px;
+    font-size:28px;
   }
 
-  .title {
-    font-size: 20px;
-    margin-top: 19px;
+  .title{
+    font-size:20px;
   }
 
-  .download-box {
-    margin-top: 32px;
-    padding: 32px 16px;
+  .download-box{
+    margin-top:30px;
+    padding:32px 15px;
   }
 
-  .download-title {
-    font-size: 19px;
+  .download-title{
+    font-size:19px;
   }
 
-  .download-button {
-    width: 100%;
-    min-width: 0;
-    font-size: 16px;
-    padding: 16px 20px;
+  .download-button{
+    width:100%;
+    min-width:0;
+    font-size:16px;
   }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
-<header class="topbar">
-
-  <a href="/" class="back">
-    ← Kembali ke Beranda
-  </a>
-
+<header>
+  <a href="/" class="back">← Kembali ke Beranda</a>
 </header>
-
 
 <main class="container">
 
@@ -262,10 +224,11 @@ body {
     Memuat video...
   </div>
 
+  <div id="error" class="status hidden">
+    Gagal memuat video.
+  </div>
 
   <div id="content" class="hidden">
-
-    <!-- VIDEO -->
 
     <div class="video-box">
 
@@ -276,7 +239,7 @@ body {
         alt="Thumbnail video"
       >
 
-      <div class="video-overlay">
+      <div class="play-overlay">
 
         <a
           id="playButton"
@@ -284,7 +247,6 @@ body {
           href="#"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Putar Video"
         >
           ▶
         </a>
@@ -293,15 +255,9 @@ body {
 
     </div>
 
-
-    <!-- TITLE -->
-
     <h1 id="videoTitle" class="title">
       Memuat judul...
     </h1>
-
-
-    <!-- REPORT -->
 
     <a
       href="javascript:void(0)"
@@ -310,9 +266,6 @@ body {
     >
       Report
     </a>
-
-
-    <!-- DOWNLOAD / ADSTERRA -->
 
     <div class="download-box">
 
@@ -327,49 +280,30 @@ body {
         target="_blank"
         rel="noopener noreferrer"
       >
-
-        <span class="download-icon">
-          ⇩
-        </span>
-
+        <span class="download-icon">⇩</span>
         Download file
-
       </a>
 
     </div>
 
   </div>
 
-
-  <div id="error" class="status hidden">
-    Gagal memuat video.
-  </div>
-
 </main>
-
 
 <script>
 
-/*
-  FILECODE DIAMBIL DARI:
-  /e/FILECODE
-*/
+const parts = window.location.pathname
+  .split("/")
+  .filter(Boolean);
 
-const parts =
-  window.location.pathname
-    .split("/")
-    .filter(Boolean);
-
-const eIndex =
-  parts.indexOf("e");
+const eIndex = parts.indexOf("e");
 
 const filecode =
   eIndex >= 0 && parts[eIndex + 1]
     ? decodeURIComponent(parts[eIndex + 1])
     : "";
 
-
-async function loadVideo() {
+async function loadVideo(){
 
   const loading =
     document.getElementById("loading");
@@ -389,12 +323,7 @@ async function loadVideo() {
   const playButton =
     document.getElementById("playButton");
 
-
-  /*
-    CEK FILECODE
-  */
-
-  if (!filecode) {
+  if(!filecode){
 
     loading.classList.add("hidden");
 
@@ -406,94 +335,62 @@ async function loadVideo() {
     return;
   }
 
-
-  try {
+  try{
 
     /*
-      PANGGIL CLOUDFLARE PAGES FUNCTION
-
-      API KEY TIDAK LAGI DITARUH DI HTML.
+      API KEY TIDAK ADA DI SINI.
+      Cloudflare Function yang menangani API key.
     */
 
     const apiUrl =
-      `/api/v1/video/info?filecode=${encodeURIComponent(filecode)}`;
-
+      "/api/v1/video/info?filecode=" +
+      encodeURIComponent(filecode);
 
     const response =
       await fetch(apiUrl);
 
-
-    if (!response.ok) {
-
+    if(!response.ok){
       throw new Error(
         "API error " + response.status
       );
-
     }
-
 
     const data =
       await response.json();
-
-
-    /*
-      HASIL API BISA BERUPA ARRAY
-    */
 
     const video =
       Array.isArray(data.result)
         ? data.result[0]
         : data.result;
 
-
-    if (!video) {
-
+    if(!video){
       throw new Error(
         "Data video tidak ditemukan"
       );
-
     }
-
-
-    /*
-      JUDUL
-    */
 
     const videoTitle =
       video.video_title ||
       video.title ||
       "Video";
 
-
     title.textContent =
       videoTitle;
-
 
     document.title =
       videoTitle + " - Donat Hyper";
 
-
-    /*
-      THUMBNAIL
-    */
-
-    if (video.player_img) {
-
+    if(video.player_img){
       thumbnail.src =
         video.player_img;
-
     }
 
+    if(video.link){
 
-    /*
-      LINK VIDEO
-    */
+      playButton.href =
+        video.link;
 
-    const videoLink =
-      video.link || "";
-
-
-    if (!videoLink) {
+    }else{
 
       throw new Error(
         "Link video tidak tersedia"
@@ -501,46 +398,26 @@ async function loadVideo() {
 
     }
 
-
-    playButton.href =
-      videoLink;
-
-
-    /*
-      TAMPILKAN HALAMAN
-    */
-
     loading.classList.add("hidden");
 
     content.classList.remove("hidden");
 
-  }
-
-
-  catch (err) {
+  }catch(err){
 
     console.error(
       "Video error:",
       err
     );
 
-
     loading.classList.add("hidden");
 
     error.textContent =
-      "Gagal memuat video: " +
-      err.message;
+      "Gagal memuat video.";
 
     error.classList.remove("hidden");
 
   }
-
 }
-
-
-/*
-  JALANKAN
-*/
 
 loadVideo();
 
