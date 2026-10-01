@@ -1,490 +1,550 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Memuat Video - Donat Hyper</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
+<title>Memuat Video - Donat Hyper</title>
 
-  <style>
-    :root {
-      --bg: #05070d;
-      --text: #f5f7fb;
-      --muted: #a0a8b8;
-      --blue: #2f80ed;
-      --border: rgba(255,255,255,.09);
-    }
+<link
+href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+rel="stylesheet"
+>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
 
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
+:root {
+  --bg: #05070d;
+  --text: #f5f7fb;
+  --muted: #a0a8b8;
+  --blue: #2f80ed;
+  --border: rgba(255,255,255,.09);
+}
 
-    /* TOP BAR */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    .topbar {
-      height: 68px;
-      display: flex;
-      align-items: center;
-      padding: 0 22px;
-      border-bottom: 1px solid var(--border);
-      background: #05070d;
-    }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
 
-    .back {
-      color: #b8c0d0;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 700;
-    }
+/* TOP BAR */
 
-    .back:hover {
-      color: white;
-    }
+.topbar {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  border-bottom: 1px solid var(--border);
+  background: #05070d;
+}
 
-    /* CONTAINER */
+.back {
+  color: #b8c0d0;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+}
 
-    .container {
-      width: 100%;
-      max-width: 900px;
-      margin: auto;
-      padding: 30px 18px 70px;
-    }
+.back:hover {
+  color: white;
+}
 
-    /* VIDEO */
+/* CONTAINER */
 
-    .video-box {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #000;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,.45);
-    }
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 18px 70px;
+}
 
-    .thumbnail {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+/* VIDEO */
 
-    .video-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,.12);
-    }
+.video-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
 
-    .play-button {
-      width: 82px;
-      height: 82px;
-      border-radius: 50%;
-      background: rgba(0,0,0,.72);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      padding-left: 5px;
-      text-decoration: none;
-      box-shadow: 0 10px 35px rgba(0,0,0,.5);
-      transition: .2s;
-    }
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-    .play-button:hover {
-      transform: scale(1.06);
-      background: rgba(0,0,0,.85);
-    }
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.12);
+}
 
-    /* TITLE */
+.play-button {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.72);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  padding-left: 5px;
+  text-decoration: none;
+  box-shadow: 0 10px 35px rgba(0,0,0,.5);
+  transition: .2s;
+}
 
-    .title {
-      margin-top: 24px;
-      font-size: 25px;
-      line-height: 1.4;
-      font-weight: 800;
-      word-break: break-word;
-    }
+.play-button:hover {
+  transform: scale(1.06);
+  background: rgba(0,0,0,.85);
+}
 
-    /* REPORT */
+/* TITLE */
 
-    .report {
-      display: inline-block;
-      margin-top: 18px;
-      padding: 11px 23px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.13);
-      background: #151a23;
-      color: white;
-      font-size: 14px;
-      font-weight: 700;
-      text-decoration: none;
-    }
+.title {
+  margin-top: 24px;
+  font-size: 25px;
+  line-height: 1.4;
+  font-weight: 800;
+  word-break: break-word;
+}
 
-    /* DOWNLOAD BOX */
+/* REPORT */
 
-    .download-box {
-      margin-top: 42px;
-      background: #eef4fb;
-      border-radius: 18px;
-      padding: 42px 25px;
-      text-align: center;
-    }
+.report {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 11px 23px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.13);
+  background: #151a23;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
 
-    .download-title {
-      color: #4e596b;
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 25px;
-    }
+/* DOWNLOAD BOX */
 
-    .download-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      min-width: 280px;
-      padding: 18px 30px;
-      border-radius: 50px;
-      background: #287cf0;
-      color: white;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 800;
-      box-shadow: 0 10px 25px rgba(40,124,240,.28);
-      transition: .2s;
-    }
+.download-box {
+  margin-top: 42px;
+  background: #eef4fb;
+  border-radius: 18px;
+  padding: 42px 25px;
+  text-align: center;
+}
 
-    .download-button:hover {
-      transform: translateY(-2px);
-      background: #1d6fe0;
-    }
+.download-title {
+  color: #4e596b;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
 
-    .download-icon {
-      font-size: 23px;
-    }
+.download-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 280px;
+  padding: 18px 30px;
+  border-radius: 50px;
+  background: #287cf0;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow: 0 10px 25px rgba(40,124,240,.28);
+  transition: .2s;
+}
 
-    /* LOADING */
+.download-button:hover {
+  transform: translateY(-2px);
+  background: #1d6fe0;
+}
 
-    .status {
-      text-align: center;
-      color: var(--muted);
-      padding: 50px 10px;
-    }
+.download-icon {
+  font-size: 23px;
+}
 
-    .hidden {
-      display: none !important;
-    }
+/* LOADING */
 
-    /* MOBILE */
+.status {
+  text-align: center;
+  color: var(--muted);
+  padding: 50px 10px;
+}
 
-    @media (max-width: 600px) {
+.hidden {
+  display: none !important;
+}
 
-      .topbar {
-        height: 60px;
-        padding: 0 16px;
-      }
+/* MOBILE */
 
-      .container {
-        padding: 18px 12px 50px;
-      }
+@media (max-width: 600px) {
 
-      .video-box {
-        border-radius: 13px;
-      }
+  .topbar {
+    height: 60px;
+    padding: 0 16px;
+  }
 
-      .play-button {
-        width: 65px;
-        height: 65px;
-        font-size: 28px;
-      }
+  .container {
+    padding: 18px 12px 50px;
+  }
 
-      .title {
-        font-size: 20px;
-        margin-top: 19px;
-      }
+  .video-box {
+    border-radius: 13px;
+  }
 
-      .download-box {
-        margin-top: 32px;
-        padding: 32px 16px;
-      }
+  .play-button {
+    width: 65px;
+    height: 65px;
+    font-size: 28px;
+  }
 
-      .download-title {
-        font-size: 19px;
-      }
+  .title {
+    font-size: 20px;
+    margin-top: 19px;
+  }
 
-      .download-button {
-        width: 100%;
-        min-width: 0;
-        font-size: 16px;
-        padding: 16px 20px;
-      }
-    }
-  </style>
+  .download-box {
+    margin-top: 32px;
+    padding: 32px 16px;
+  }
+
+  .download-title {
+    font-size: 19px;
+  }
+
+  .download-button {
+    width: 100%;
+    min-width: 0;
+    font-size: 16px;
+    padding: 16px 20px;
+  }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-  <header class="topbar">
-    <a href="/" class="back">← Kembali ke Beranda</a>
-  </header>
+<header class="topbar">
 
-  <main class="container">
+  <a href="/" class="back">
+    ← Kembali ke Beranda
+  </a>
 
-    <div id="loading" class="status">
-      Memuat video...
-    </div>
+</header>
 
-    <div id="content" class="hidden">
 
-      <!-- VIDEO -->
+<main class="container">
 
-      <div class="video-box">
+  <div id="loading" class="status">
+    Memuat video...
+  </div>
 
-        <img
-          id="thumbnail"
-          class="thumbnail"
-          src=""
-          alt="Thumbnail video"
-        >
 
-        <div class="video-overlay">
+  <div id="content" class="hidden">
 
-          <a
-            id="playButton"
-            class="play-button"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Putar Video"
-          >
-            ▶
-          </a>
+    <!-- VIDEO -->
 
-        </div>
+    <div class="video-box">
 
-      </div>
-
-      <!-- TITLE -->
-
-      <h1 id="videoTitle" class="title">
-        Memuat judul...
-      </h1>
-
-      <!-- REPORT -->
-
-      <a
-        href="javascript:void(0)"
-        class="report"
-        onclick="return false;"
+      <img
+        id="thumbnail"
+        class="thumbnail"
+        src=""
+        alt="Thumbnail video"
       >
-        Report
-      </a>
 
-      <!-- DOWNLOAD / ADSTERRA -->
-
-      <div class="download-box">
-
-        <div class="download-title">
-          Your file is ready
-        </div>
+      <div class="video-overlay">
 
         <a
-          id="downloadButton"
-          class="download-button"
-          href="https://laxativethem.com/yd0qkdd9b?key=b2e04fb72c8768c1d81819ff3cfd7294"
+          id="playButton"
+          class="play-button"
+          href="#"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Putar Video"
         >
-          <span class="download-icon">⇩</span>
-          Download file
+          ▶
         </a>
 
       </div>
 
     </div>
 
-    <div id="error" class="status hidden">
-      Gagal memuat video.
+
+    <!-- TITLE -->
+
+    <h1 id="videoTitle" class="title">
+      Memuat judul...
+    </h1>
+
+
+    <!-- REPORT -->
+
+    <a
+      href="javascript:void(0)"
+      class="report"
+      onclick="return false;"
+    >
+      Report
+    </a>
+
+
+    <!-- DOWNLOAD / ADSTERRA -->
+
+    <div class="download-box">
+
+      <div class="download-title">
+        Your file is ready
+      </div>
+
+      <a
+        id="downloadButton"
+        class="download-button"
+        href="https://laxativethem.com/yd0qkdd9b?key=b2e04fb72c8768c1d81819ff3cfd7294"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+
+        <span class="download-icon">
+          ⇩
+        </span>
+
+        Download file
+
+      </a>
+
     </div>
 
-  </main>
+  </div>
 
 
-  <script>
+  <div id="error" class="status hidden">
+    Gagal memuat video.
+  </div>
 
-    const API_KEY =
-      '7d33e4000112589c0d5a8fc76b454c97c23886e9eacc92e01ec994bd5b88117c';
+</main>
 
 
-    /* AMBIL FILECODE DARI URL */
+<script>
 
-    const parts =
-      window.location.pathname
-        .split("/")
-        .filter(Boolean);
+/*
+  FILECODE DIAMBIL DARI:
+  /e/FILECODE
+*/
 
-    const eIndex =
-      parts.indexOf("e");
+const parts =
+  window.location.pathname
+    .split("/")
+    .filter(Boolean);
 
-    const filecode =
-      eIndex >= 0 && parts[eIndex + 1]
-        ? decodeURIComponent(parts[eIndex + 1])
-        : "";
+const eIndex =
+  parts.indexOf("e");
 
+const filecode =
+  eIndex >= 0 && parts[eIndex + 1]
+    ? decodeURIComponent(parts[eIndex + 1])
+    : "";
 
-    async function loadVideo() {
 
-      const loading =
-        document.getElementById("loading");
+async function loadVideo() {
 
-      const content =
-        document.getElementById("content");
+  const loading =
+    document.getElementById("loading");
 
-      const error =
-        document.getElementById("error");
+  const content =
+    document.getElementById("content");
 
-      const title =
-        document.getElementById("videoTitle");
+  const error =
+    document.getElementById("error");
 
-      const thumbnail =
-        document.getElementById("thumbnail");
+  const title =
+    document.getElementById("videoTitle");
 
-      const playButton =
-        document.getElementById("playButton");
+  const thumbnail =
+    document.getElementById("thumbnail");
 
+  const playButton =
+    document.getElementById("playButton");
 
-      if (!filecode) {
 
-        loading.classList.add("hidden");
+  /*
+    CEK FILECODE
+  */
 
-        error.textContent =
-          "Video tidak ditemukan.";
+  if (!filecode) {
 
-        error.classList.remove("hidden");
+    loading.classList.add("hidden");
 
-        return;
-      }
+    error.textContent =
+      "Video tidak ditemukan.";
 
+    error.classList.remove("hidden");
 
-      try {
+    return;
+  }
 
-        const apiUrl =
-          `/_api/v1/video/info?api_key=${encodeURIComponent(API_KEY)}&filecode=${encodeURIComponent(filecode)}`;
 
+  try {
 
-        const response =
-          await fetch(apiUrl);
+    /*
+      PANGGIL CLOUDFLARE PAGES FUNCTION
 
+      API KEY TIDAK LAGI DITARUH DI HTML.
+    */
 
-        if (!response.ok) {
-          throw new Error(
-            "API error " + response.status
-          );
-        }
+    const apiUrl =
+      `/api/v1/video/info?filecode=${encodeURIComponent(filecode)}`;
 
 
-        const data =
-          await response.json();
+    const response =
+      await fetch(apiUrl);
 
 
-        const video =
-          Array.isArray(data.result)
-            ? data.result[0]
-            : data.result;
+    if (!response.ok) {
 
-
-        if (!video) {
-          throw new Error(
-            "Data video tidak ditemukan"
-          );
-        }
-
-
-        const videoTitle =
-          video.video_title || "Video";
-
-
-        const videoLink =
-          video.link || "";
-
-
-        if (!videoLink) {
-          throw new Error(
-            "Link video tidak tersedia"
-          );
-        }
-
-
-        /* JUDUL */
-
-        title.textContent =
-          videoTitle;
-
-
-        document.title =
-          videoTitle + " - Donat Hyper";
-
-
-        /* THUMBNAIL */
-
-        if (video.player_img) {
-
-          thumbnail.src =
-            video.player_img;
-
-        }
-
-
-        /* LINK PUTAR VIDEO */
-
-        playButton.href =
-          videoLink;
-
-
-        /* TAMPILKAN */
-
-        loading.classList.add("hidden");
-
-        content.classList.remove("hidden");
-
-
-      } catch (err) {
-
-        console.error(err);
-
-        loading.classList.add("hidden");
-
-        error.textContent =
-          "Gagal memuat video: " + err.message;
-
-        error.classList.remove("hidden");
-
-      }
+      throw new Error(
+        "API error " + response.status
+      );
 
     }
 
 
-    loadVideo();
+    const data =
+      await response.json();
 
-  </script>
+
+    /*
+      HASIL API BISA BERUPA ARRAY
+    */
+
+    const video =
+      Array.isArray(data.result)
+        ? data.result[0]
+        : data.result;
+
+
+    if (!video) {
+
+      throw new Error(
+        "Data video tidak ditemukan"
+      );
+
+    }
+
+
+    /*
+      JUDUL
+    */
+
+    const videoTitle =
+      video.video_title ||
+      video.title ||
+      "Video";
+
+
+    title.textContent =
+      videoTitle;
+
+
+    document.title =
+      videoTitle + " - Donat Hyper";
+
+
+    /*
+      THUMBNAIL
+    */
+
+    if (video.player_img) {
+
+      thumbnail.src =
+        video.player_img;
+
+    }
+
+
+    /*
+      LINK VIDEO
+    */
+
+    const videoLink =
+      video.link || "";
+
+
+    if (!videoLink) {
+
+      throw new Error(
+        "Link video tidak tersedia"
+      );
+
+    }
+
+
+    playButton.href =
+      videoLink;
+
+
+    /*
+      TAMPILKAN HALAMAN
+    */
+
+    loading.classList.add("hidden");
+
+    content.classList.remove("hidden");
+
+  }
+
+
+  catch (err) {
+
+    console.error(
+      "Video error:",
+      err
+    );
+
+
+    loading.classList.add("hidden");
+
+    error.textContent =
+      "Gagal memuat video: " +
+      err.message;
+
+    error.classList.remove("hidden");
+
+  }
+
+}
+
+
+/*
+  JALANKAN
+*/
+
+loadVideo();
+
+</script>
 
 </body>
 </html>
