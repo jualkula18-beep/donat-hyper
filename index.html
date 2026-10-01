@@ -81,7 +81,7 @@
       loaderEl.classList.add("visible");
 
       // Menggunakan proxy server-side (/_api/)
-      let url = `/api/v1/video/list?page=${currentPage}&limit=40`;
+      let url = `/_api/v1/video/list?page=${currentPage}&limit=40`;
       if (searchQuery) url += `&title=${encodeURIComponent(searchQuery)}`;
 
       try {
