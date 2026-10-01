@@ -1,203 +1,134 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Donat Hyper </title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #060a13; --surface: #0b1121; --surface-2: #0f1729; --card: #0a0f1a;
-      --border: rgba(255,255,255,0.06); --border-hover: rgba(56,139,255,0.4);
-      --text: #f0f2f5; --text-secondary: #7d8aa0; --accent: #388bff;
-      --accent-soft: rgba(56,139,255,0.14); --radius: 14px; --radius-sm: 10px;
-      --font: 'Plus Jakarta Sans', sans-serif;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
-    .container { position: relative; z-index: 1; max-width: 1320px; margin: 0 auto; padding: 0 20px; }
-    header { position: sticky; top: 0; z-index: 100; background: rgba(6, 10, 19, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
-    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), #7c5cff); border-radius: 10px; display: grid; place-items: center; }
-    .logo-icon svg { width: 18px; height: 18px; fill: #fff; }
-    .logo-text { font-size: 20px; font-weight: 800; color: var(--text); }
-    .logo-text span { color: var(--accent); }
-    .search-box { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 420px; height: 40px; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-sm); padding: 0 14px; }
-    .search-box input { flex: 1; border: none; outline: none; background: transparent; color: var(--text); font-size: 13.5px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Donat Hyper</title>
 
-    .grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; padding: 30px 0 48px; }
-    .card { display: block; text-decoration: none; color: inherit; border-radius: var(--radius); overflow: hidden; background: var(--card); border: 1px solid var(--border); cursor: pointer; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .card:hover { transform: translateY(-8px); border-color: var(--border-hover); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
-    
-    .thumb { position: relative; width: 100%; aspect-ratio: 3 / 4.5; background: #000; overflow: hidden; }
-    .thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: 0.4s; }
-    .card:hover .thumb img { opacity: 1; transform: scale(1.08); }
+<style>
+*{
+box-sizing:border-box;
+}
+body{
+margin:0;
+background:#060a13;
+color:white;
+font-family:Arial,sans-serif;
+}
 
-    .content { padding: 14px; }
-    .title { font-size: 14px; font-weight: 700; color: var(--text); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 40px; line-height: 1.4; margin-bottom: 8px; }
-    .quality { color: var(--accent); font-weight: 700; font-size: 10px; background: var(--accent-soft); padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+header{
+padding:20px;
+background:#0b1121;
+font-size:24px;
+font-weight:bold;
+}
 
-    .loader { text-align: center; padding: 40px; color: var(--text-secondary); font-size: 14px; display: none; }
-    .loader.visible { display: block; }
+header span{
+color:#388bff;
+}
 
-    @media (max-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } }
-    @media (max-width: 900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .search-box { max-width: 160px; } }
-  </style>
+.grid{
+padding:20px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+.card{
+background:#0f1729;
+border-radius:12px;
+overflow:hidden;
+}
+
+.card img{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+
+.title{
+padding:12px;
+font-weight:bold;
+}
+
+@media(min-width:800px){
+.grid{
+grid-template-columns:repeat(5,1fr);
+}
+}
+</style>
+
 </head>
 
-
-
-
-
-
-
 <body>
-  <header><div class="container"><div class="header-inner">
-    <a href="/" class="logo"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M8 5.14v14l11-7-11-7Z"/></svg></div><div class="logo-text">Donat<span> Hyper</span></div></a>
-    <div class="search-box"><input type="text" id="searchInput" placeholder="Cari video..." /></div>
-  </div></div></header>
 
-  <main class="container">
-    <section class="grid" id="videoGrid"></section>
-    <div id="loader" class="loader">Memuat video...</div>
-  </main>
+<header>
+▶ Donat <span>Hyper</span>
+</header>
 
-  <script>
-    const gridEl = document.getElementById("videoGrid");
-    const loaderEl = document.getElementById("loader");
-    
-    let currentPage = 1;
-    let isLoading = false;
-    let hasMore = true;
-    let searchQuery = "";
 
-    async function fetchVideos(isNewSearch = false) {
-      if (isLoading || (!hasMore && !isNewSearch)) return;
-      isLoading = true;
-      if (isNewSearch) { gridEl.innerHTML = ""; currentPage = 1; hasMore = true; }
-      loaderEl.classList.add("visible");
+<div class="grid" id="videos">
+Loading...
+</div>
 
-      // Menggunakan proxy server-side (/_api/)
-      let url = `/_api/v1/video/list?page=${currentPage}&limit=40`;
-      if (searchQuery) url += `&title=${encodeURIComponent(searchQuery)}`;
 
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-        console.log(data);
-        document.body.innerHTML += "<pre>"+JSON.stringify(data,null,2)+"</pre>";
-        if (data.status === 200 && data.result.videos.length > 0) {
-        alert(JSON.stringify(data));
-appendVideos(data.result.videos); 
-          currentPage++;
-          if (data.result.videos.length < 40) hasMore = false;
-        } else { hasMore = false; }
-      } catch (err) { console.error(err); } 
-      finally { isLoading = false; loaderEl.classList.remove("visible"); }
-    }
+<script>
 
-    function getFilecode(video) {
-      // Vidara normally returns `filecode`, but keep fallbacks for older responses.
-      const candidates = [
-        video?.filecode,
-        video?.file_code,
-        video?.fileCode,
-        video?.video_code,
-        video?.videoCode,
-        video?.code,
-        video?.url,
-        video?.link
-      ];
+async function loadVideos(){
 
-      for (const value of candidates) {
-        if (!value) continue;
-        const text = String(value).trim();
+const box=document.getElementById("videos");
 
-        // If this is a URL, take the last non-empty path segment.
-        try {
-          if (/^https?:\/\//i.test(text)) {
-            const u = new URL(text);
-            const parts = u.pathname.split('/').filter(Boolean);
-            if (parts.length) return decodeURIComponent(parts[parts.length - 1]).trim();
-          }
-        } catch (_) {}
+try{
 
-        // Ignore obvious empty/path-only values.
-        const cleaned = text.replace(/^\/+|\/+$/g, '').trim();
-        if (cleaned && cleaned !== 'e' && cleaned !== 'v') return cleaned;
-      }
+const res=await fetch("/api/v1/video/list");
 
-      return '';
-    }
+const data=await res.json();
 
-    function appendVideos(videos) {
-      const html = videos.map(v => {
-        const filecode = getFilecode(v);
+console.log(data);
 
-        // Do not generate a broken /e/ link when the API item has no code.
-        if (!filecode) {
-          console.warn("Vidara item has no filecode:", v);
-          return '';
-        }
 
-        const href = `/e/${encodeURIComponent(filecode)}`;
-        const title = String(v.title || v.video_title || 'Tanpa judul')
-          .replace(/&/g, '&amp;')
-          .replace(/"/g, '&quot;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;');
-        const thumbnail = String(v.thumbnail || v.player_img || '');
-        const fallbackSeed = encodeURIComponent(filecode);
+if(!data.result || !data.result.videos){
+box.innerHTML="Video kosong";
+return;
+}
 
-        return `
-        <a class="card" href="${href}" data-filecode="${encodeURIComponent(filecode)}">
-          <div class="thumb">
-            <img src="${thumbnail}" onerror="this.src='https://picsum.photos/seed/${fallbackSeed}/400/600.jpg'" loading="lazy" />
-          </div>
-          <div class="content">
-            <h3 class="title" title="${title}">${title}</h3>
-            <span class="quality">HD</span>
-          </div>
-        </a>
-      `;
-      }).join("");
-      gridEl.insertAdjacentHTML('beforeend', html);
-    }
 
-    // Force navigation using the exact filecode stored on the card.
-    // This prevents the browser from ever opening /e/ with an empty code.
-    gridEl.addEventListener("click", (event) => {
-      const card = event.target.closest("a.card");
-      if (!card) return;
+box.innerHTML="";
 
-      const encodedCode = card.dataset.filecode;
-      if (!encodedCode) {
-        event.preventDefault();
-        console.warn("Video clicked without filecode");
-        return;
-      }
 
-      event.preventDefault();
-      window.location.assign(`/e/${encodedCode}`);
-    });
+data.result.videos.forEach(video=>{
 
-    window.addEventListener("scroll", () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 800) fetchVideos();
-    });
+box.innerHTML += `
 
-    let t;
-    document.getElementById("searchInput").oninput = (e) => {
-      clearTimeout(t);
-      searchQuery = e.target.value;
-      t = setTimeout(() => fetchVideos(true), 500);
-    };
+<div class="card">
 
-    fetchVideos();
-  </script>
+<img src="${video.thumbnail || 'https://picsum.photos/400/600'}">
 
+<div class="title">
+${video.title || "Tanpa judul"}
+</div>
+
+</div>
+
+`;
+
+});
+
+
+}catch(e){
+
+console.log(e);
+box.innerHTML="Error mengambil video";
+
+}
+
+
+}
+
+
+loadVideos();
+
+</script>
 
 
 </body>
