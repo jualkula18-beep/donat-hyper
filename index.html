@@ -9,6 +9,7 @@
 *{
 box-sizing:border-box;
 }
+
 body{
 margin:0;
 background:#060a13;
@@ -35,9 +36,12 @@ gap:15px;
 }
 
 .card{
+text-decoration:none;
+color:white;
 background:#0f1729;
 border-radius:12px;
 overflow:hidden;
+display:block;
 }
 
 .card img{
@@ -49,16 +53,20 @@ object-fit:cover;
 .title{
 padding:12px;
 font-weight:bold;
+font-size:16px;
 }
+
 
 @media(min-width:800px){
 .grid{
 grid-template-columns:repeat(5,1fr);
 }
 }
+
 </style>
 
 </head>
+
 
 <body>
 
@@ -72,53 +80,68 @@ Loading...
 </div>
 
 
+
 <script>
 
 async function loadVideos(){
 
 const box=document.getElementById("videos");
 
+
 try{
 
-const res=await fetch("/api/v1/video/list");
 
-const data=await res.json();
+const res = await fetch("/api/v1/video/list");
+
+const data = await res.json();
 
 console.log(data);
 
 
+
 if(!data.result || !data.result.videos){
+
 box.innerHTML="Video kosong";
 return;
+
 }
+
 
 
 box.innerHTML="";
 
 
+
 data.result.videos.forEach(video=>{
+
 
 box.innerHTML += `
 
-<div class="card">
+<a class="card" href="/e/${video.filecode}">
 
-<img src="${video.thumbnail || 'https://picsum.photos/400/600'}">
+<img src="${video.thumbnail || video.player_img || 'https://picsum.photos/400/600'}">
 
 <div class="title">
-${video.title || "Tanpa judul"}
-</div>
+
+${video.title || video.video_title || "Tanpa judul"}
 
 </div>
+
+
+</a>
 
 `;
+
 
 });
 
 
-}catch(e){
 
-console.log(e);
-box.innerHTML="Error mengambil video";
+}catch(error){
+
+console.log(error);
+
+box.innerHTML="Gagal mengambil video";
 
 }
 
@@ -127,6 +150,7 @@ box.innerHTML="Error mengambil video";
 
 
 loadVideos();
+
 
 </script>
 
