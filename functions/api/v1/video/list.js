@@ -8,23 +8,16 @@ export async function onRequest(context) {
     context.env.VIDARA_API_KEY
   );
 
-const requestUrl = new URL(context.request.url);
+  url.searchParams.set("page", "1");
+  url.searchParams.set("limit", "10");
 
-const page = requestUrl.searchParams.get("page") || "1";
+  const res = await fetch(url);
 
-url.searchParams.set("page", page);
-url.searchParams.set("limit", "10");
+  const text = await res.text();
 
- const res = await fetch(url);
-
-const data = await res.json();
-
-return new Response(JSON.stringify({
-  status: res.status,
-  data: data
-}), {
-    headers: {
-      "content-type": "application/json"
+  return new Response(text, {
+    headers:{
+      "content-type":"application/json"
     }
   });
 }
