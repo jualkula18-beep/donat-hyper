@@ -15,11 +15,14 @@ const page = requestUrl.searchParams.get("page") || "1";
 url.searchParams.set("page", page);
 url.searchParams.set("limit", "10");
 
-  const res = await fetch(url);
+ const res = await fetch(url);
 
-  const data = await res.json();
+const data = await res.json();
 
-  return new Response(JSON.stringify(data), {
+return new Response(JSON.stringify({
+  status: res.status,
+  data: data
+}), {
     headers: {
       "content-type": "application/json"
     }
