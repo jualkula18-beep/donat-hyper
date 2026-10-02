@@ -8,8 +8,12 @@ export async function onRequest(context) {
     context.env.VIDARA_API_KEY
   );
 
-  url.searchParams.set("page", "1");
-  url.searchParams.set("limit", "40");
+const requestUrl = new URL(context.request.url);
+
+const page = requestUrl.searchParams.get("page") || "1";
+
+url.searchParams.set("page", page);
+url.searchParams.set("limit", "10");
 
   const res = await fetch(url);
 
