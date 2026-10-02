@@ -78,7 +78,15 @@ grid-template-columns:repeat(5,1fr);
 <div class="grid" id="videos">
 Loading...
 </div>
+<div class="pagination">
 
+<a href="?page=1">Part 1</a>
+<a href="?page=2">Part 2</a>
+<a href="?page=3">Part 3</a>
+<a href="?page=4">Part 4</a>
+<a href="?page=5">Part 5</a>
+
+</div>
 
 
 <script>
@@ -91,7 +99,11 @@ const box=document.getElementById("videos");
 try{
 
 
-const res = await fetch("/api/v1/video/list");
+const page =
+new URLSearchParams(window.location.search).get("page") || 1;
+
+const res =
+await fetch("/api/v1/video/list?page=" + page);
 
 const data = await res.json();
 
