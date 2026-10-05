@@ -136,25 +136,30 @@ async function loadVideos(){
 
 const box=document.getElementById("videos");
 
-
 try{
-
 
 const page =
 new URLSearchParams(window.location.search).get("page") || 1;
 
+
 const res =
 await fetch("/api/v1/video/list?page=" + page);
+
 
 const data = await res.json();
 
 console.log(data);
 
 
+// API mengirim hasil dalam bentuk string "hasil"
+const real = JSON.parse(data.hasil);
 
-if(!data.result || !data.result.videos){
+
+
+if(!real.result || !real.result.videos){
 
 box.innerHTML="Video kosong";
+console.log(real);
 return;
 
 }
@@ -165,7 +170,7 @@ box.innerHTML="";
 
 
 
-data.result.videos.forEach(video=>{
+real.result.videos.forEach(video=>{
 
 
 box.innerHTML += `
@@ -180,14 +185,12 @@ ${video.title || video.video_title || "Tanpa judul"}
 
 </div>
 
-
 </a>
 
 `;
 
 
 });
-
 
 
 }catch(error){
@@ -197,7 +200,6 @@ console.log(error);
 box.innerHTML="Gagal mengambil video";
 
 }
-
 
 }
 
