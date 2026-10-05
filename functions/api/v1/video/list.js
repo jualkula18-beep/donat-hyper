@@ -5,7 +5,7 @@ export async function onRequest(context) {
 
   url.searchParams.set(
     "api_key",
-    context.env.VIDARA_API_KEY
+    context.env.VIDARA
   );
 
 const requestUrl = new URL(context.request.url);
