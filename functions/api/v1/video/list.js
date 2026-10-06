@@ -7,7 +7,11 @@ export async function onRequest(context) {
     "api_key",
     context.env.VIDARA_API_KEY
   );
+const requestUrl = new URL(context.request.url);
+const page = requestUrl.searchParams.get("page") || "1";
 
+url.searchParams.set("page", page);
+url.searchParams.set("limit", "10");
   const res = await fetch(url);
 
   const data = await res.json();
