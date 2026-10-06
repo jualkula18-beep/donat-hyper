@@ -11,7 +11,7 @@ const requestUrl = new URL(context.request.url);
 const page = requestUrl.searchParams.get("page") || "1";
 
 url.searchParams.set("page", page);
-url.searchParams.set("limit", "10");
+url.searchParams.set("limit", "30");
   const res = await fetch(url);
 
   const data = await res.json();
