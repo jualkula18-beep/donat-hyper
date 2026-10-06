@@ -170,7 +170,9 @@ box.innerHTML="";
 
 
 
-real.result.videos.forEach(video=>{
+real.result.videos
+.filter(video => video.status === "active")
+.forEach(video=>{
 
 
 box.innerHTML += `
